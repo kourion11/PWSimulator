@@ -15,10 +15,11 @@ class ViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "black_background")
-        return imageView
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .black
+        tableView.separatorStyle = .none
+        return tableView
     }()
     
     private lazy var improveLabel: UILabel = {
@@ -29,17 +30,10 @@ class ViewController: UIViewController {
         return label
     }()
     
-    private lazy var resultLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont.boldSystemFont(ofSize: 17)
-        return label
-    }()
-    
     private lazy var currentAttackLabel: UILabel = {
         let label = UILabel()
         label.textColor = .systemYellow
-        label.text = "Атака 1632 "
+        label.text = "Атака \(attackStat) "
         return label
     }()
     
@@ -47,7 +41,7 @@ class ViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .systemGreen
-        label.text = "( )"
+        label.text = "(+\(plusAttack))"
         return label
     }()
     
@@ -61,14 +55,14 @@ class ViewController: UIViewController {
     
     private lazy var itemsLabel: UILabel = {
         let label = UILabel()
-         label.font = UIFont.boldSystemFont(ofSize: 17)
-         label.textColor = .systemYellow
-         label.text = "Особые предметы для улучшения:  "
-         return label
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = .systemYellow
+        label.text = "Особые предметы для улучшения:  "
+        return label
     }()
     
     private lazy var historyLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .systemYellow
         label.text = "История: "
@@ -78,59 +72,94 @@ class ViewController: UIViewController {
     private lazy var improveButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 16
-        button.setTitle("Улучшить", for: .normal)
-        button.backgroundColor = .systemGreen
-        button.addTarget(self, action: #selector(improve), for: .touchUpInside)
+        button.titleColor(for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), for: .normal)
+        button.titleLabel!.font = UIFont.boldSystemFont(ofSize: 22)
+        button.setTitle("Улучшение", for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        button.addTarget(self, action: #selector(enchantPressed), for: .touchUpInside)
         return button
     }()
     
     var enchant = 0
     var attackStat = 1632
-
+    var plusAttack = 133
+    var history: [ResultModel] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
+        setupTable()
         setupCounstraints()
     }
     
     @objc
-    func improve() {
+    func enchantPressed() {
+        improveButton.alpha = 0.5
+        improveButton.isEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.improveButton.alpha = 1.0
+            self.improveButton.isEnabled = true
+            self.enchanting()
+        }
+    }
+    
+    func setupTable() {
+        tableView.register(ResultCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func enchanting() {
         let improveChance = Int.random(in: 0...100)
         if enchant < 12 {
             if improveChance >= 50 {
                 enchant += 1
-                attackStat += 133
-                plusAttackLabel.text = "(+133)"
+                attackStat += plusAttack
+                plusAttackLabel.text = "(+\(plusAttack))"
                 currentAttackLabel.text = "Атака \(attackStat) "
-                resultLabel.text = "Усовершенствование прошло успешно."
-                resultLabel.textColor = .systemGreen
+                let succesResult = ResultModel(text: "Усовершенствование прошло успешно!",
+                                               result: true)
+                history.insert(succesResult, at: 0)
+                reloadTable()
             } else {
                 if enchant > 0 && attackStat >= 1632 {
                     enchant -= 1
-                    attackStat -= 133
+                    attackStat -= plusAttack
                     currentAttackLabel.text = "Атака \(attackStat) "
+                    let failedResult = ResultModel(
+                        text: "Уровень совершенства упал до \(enchant).",
+                        result: false)
+                    history.insert(failedResult, at: 0)
+                    reloadTable()
                 } else {
-                    enchant = 0
+                    let failedResult = ResultModel(
+                        text: "Уровень совершенства не изменился.",
+                        result: false)
+                    history.insert(failedResult, at: 0)
+                    reloadTable()
                     attackStat = 1632
                     currentAttackLabel.text = "Атака \(attackStat) "
-                    plusAttackLabel.text = "( )"
                 }
-                resultLabel.text = "Не удалось усовершенствовать. \rУровень совершенства упал до \(enchant)."
-                resultLabel.textColor = .systemYellow
             }
         } else {
             improveButton.isHidden = true
         }
     }
     
+    func reloadTable() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     func setupViews() {
         view.backgroundColor = #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
         view.addSubview(weaponImage)
-        view.addSubview(backgroundImage)
+        view.addSubview(tableView)
         view.addSubview(improveLabel)
         view.addSubview(improveButton)
-        view.addSubview(resultLabel)
         view.addSubview(historyLabel)
         view.addSubview(itemsLabel)
         view.addSubview(addResultLabel)
@@ -147,13 +176,13 @@ class ViewController: UIViewController {
             weaponImage.widthAnchor.constraint(equalToConstant: 50)
         ])
         
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            backgroundImage.leftAnchor.constraint(equalTo: historyLabel.leftAnchor, constant: -5),
-            backgroundImage.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5),
-            backgroundImage.topAnchor.constraint(equalTo: historyLabel.bottomAnchor, constant: 5),
-            backgroundImage.heightAnchor.constraint(equalToConstant: 350),
-            backgroundImage.widthAnchor.constraint(equalToConstant: 350)
+            tableView.leftAnchor.constraint(equalTo: historyLabel.leftAnchor, constant: -5),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5),
+            tableView.topAnchor.constraint(equalTo: historyLabel.bottomAnchor, constant: 5),
+            tableView.heightAnchor.constraint(equalToConstant: 350),
+            tableView.widthAnchor.constraint(equalToConstant: 350)
         ])
         
         improveLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -188,23 +217,38 @@ class ViewController: UIViewController {
         
         improveButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            improveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -110),
+            improveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -140),
             improveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             improveButton.heightAnchor.constraint(equalToConstant: 50),
             improveButton.widthAnchor.constraint(equalToConstant: 150)
         ])
         
-        resultLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            resultLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 250),
-            resultLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10)
-        ])
-        
         historyLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            historyLabel.bottomAnchor.constraint(equalTo: resultLabel.topAnchor, constant: -10),
-            historyLabel.leftAnchor.constraint(equalTo: resultLabel.leftAnchor)
+            historyLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 240),
+            historyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10)
         ])
     }
 }
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return history.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResultCell
+        let model = history[indexPath.row]
+        if model.result {
+            cell.resultLabel.textColor = .systemGreen
+        } else {
+            cell.resultLabel.textColor = .systemYellow
+        }
+        cell.resultLabel.text = model.text
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 25
+    }
+}
