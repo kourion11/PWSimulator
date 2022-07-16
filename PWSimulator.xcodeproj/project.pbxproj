@@ -15,6 +15,7 @@
 		3374A29F287F43FB00A845CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3374A29D287F43FB00A845CF /* LaunchScreen.storyboard */; };
 		33A66D452881CE4D003F5901 /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D442881CE4D003F5901 /* ResultCell.swift */; };
 		33A66D472881D81B003F5901 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D462881D81B003F5901 /* ResultModel.swift */; };
+		33A66D4E2882E7F7003F5901 /* EnchantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D4D2882E7F7003F5901 /* EnchantModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3374A2A0287F43FB00A845CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A66D442881CE4D003F5901 /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		33A66D462881D81B003F5901 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
+		33A66D4D2882E7F7003F5901 /* EnchantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,15 +64,48 @@
 			children = (
 				3374A292287F43F900A845CF /* AppDelegate.swift */,
 				3374A294287F43F900A845CF /* SceneDelegate.swift */,
-				3374A296287F43F900A845CF /* ViewController.swift */,
-				33A66D442881CE4D003F5901 /* ResultCell.swift */,
-				33A66D462881D81B003F5901 /* ResultModel.swift */,
+				33A66D4C2882E7E0003F5901 /* Models */,
+				33A66D4A2882E7CA003F5901 /* Views */,
+				33A66D482882E79C003F5901 /* Controllers */,
 				3374A298287F43F900A845CF /* Main.storyboard */,
 				3374A29B287F43FB00A845CF /* Assets.xcassets */,
 				3374A29D287F43FB00A845CF /* LaunchScreen.storyboard */,
 				3374A2A0287F43FB00A845CF /* Info.plist */,
 			);
 			path = PWSimulator;
+			sourceTree = "<group>";
+		};
+		33A66D482882E79C003F5901 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3374A296287F43F900A845CF /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		33A66D492882E7BA003F5901 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				33A66D442881CE4D003F5901 /* ResultCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		33A66D4A2882E7CA003F5901 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				33A66D492882E7BA003F5901 /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		33A66D4C2882E7E0003F5901 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33A66D462881D81B003F5901 /* ResultModel.swift */,
+				33A66D4D2882E7F7003F5901 /* EnchantModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +182,7 @@
 				3374A297287F43F900A845CF /* ViewController.swift in Sources */,
 				3374A293287F43F900A845CF /* AppDelegate.swift in Sources */,
 				33A66D452881CE4D003F5901 /* ResultCell.swift in Sources */,
+				33A66D4E2882E7F7003F5901 /* EnchantModel.swift in Sources */,
 				33A66D472881D81B003F5901 /* ResultModel.swift in Sources */,
 				3374A295287F43F900A845CF /* SceneDelegate.swift in Sources */,
 			);

@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     private lazy var currentAttackLabel: UILabel = {
         let label = UILabel()
         label.textColor = .systemYellow
-        label.text = "Атака \(attackStat) "
+        label.text = "Атака \(enchantModel.attackStat) "
         return label
     }()
     
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .systemGreen
-        label.text = "(+\(plusAttack))"
+        label.text = "(+\(enchantModel.plusAttack))"
         return label
     }()
     
@@ -80,12 +80,8 @@ class ViewController: UIViewController {
         button.addTarget(self, action: #selector(enchantPressed), for: .touchUpInside)
         return button
     }()
-        
-    var enchant = 0
-    var chance = 70
-    var attackStat = 1632
-    var plusAttack = 133
-    var history: [ResultModel] = []
+    
+    var enchantModel = EnchantModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +95,7 @@ class ViewController: UIViewController {
     func enchantPressed() {
         improveButton.alpha = 0.5
         improveButton.isEnabled = false
-        vibration()
+        enchantModel.pressButtonVibration()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.improveButton.alpha = 1.0
             self.improveButton.isEnabled = true
@@ -114,54 +110,16 @@ class ViewController: UIViewController {
     }
     
     func enchanting() {
-        let improveChance = Int.random(in: 0...100)
-        if enchant < 12 {
-            if improveChance <= chance {
-                enchant += 1
-                chance -= 5
-                attackStat += plusAttack
-                plusAttackLabel.text = "(+\(plusAttack))"
-                currentAttackLabel.text = "Атака \(attackStat) "
-                let succesResult = ResultModel(
-                    text: "Усовершенствование прошло успешно!",
-                    result: true)
-                history.insert(succesResult, at: 0)
-                reloadTable()
-            } else {
-                if enchant > 0 && attackStat >= 1632 {
-                    enchant -= 1
-                    chance += 5
-                    attackStat -= plusAttack
-                    currentAttackLabel.text = "Атака \(attackStat) "
-                    let failedResult = ResultModel(
-                        text: "Уровень совершенства упал до \(enchant).",
-                        result: false)
-                    history.insert(failedResult, at: 0)
-                    reloadTable()
-                } else {
-                    let failedResult = ResultModel(
-                        text: "Уровень совершенства не изменился.",
-                        result: false)
-                    history.insert(failedResult, at: 0)
-                    reloadTable()
-                    attackStat = 1632
-                    currentAttackLabel.text = "Атака \(attackStat) "
-                }
-            }
-        } else {
-            improveButton.isHidden = true
-        }
+        enchantModel.result()
+        currentAttackLabel.text = "Атака \(enchantModel.attackStat) "
+        improveButton.isHidden = enchantModel.buttonIsNotActive
+        reloadTable()
     }
     
     func reloadTable() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-    }
-    
-    func vibration() {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
     }
     
     func setupViews() {
@@ -243,12 +201,12 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return history.count
+        return enchantModel.history.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResultCell
-        let model = history[indexPath.row]
+        let model = enchantModel.history[indexPath.row]
         if model.result {
             cell.resultLabel.textColor = .systemGreen
         } else {
