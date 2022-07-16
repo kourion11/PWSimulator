@@ -80,8 +80,9 @@ class ViewController: UIViewController {
         button.addTarget(self, action: #selector(enchantPressed), for: .touchUpInside)
         return button
     }()
-    
+        
     var enchant = 0
+    var chance = 70
     var attackStat = 1632
     var plusAttack = 133
     var history: [ResultModel] = []
@@ -98,6 +99,7 @@ class ViewController: UIViewController {
     func enchantPressed() {
         improveButton.alpha = 0.5
         improveButton.isEnabled = false
+        vibration()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.improveButton.alpha = 1.0
             self.improveButton.isEnabled = true
@@ -114,18 +116,21 @@ class ViewController: UIViewController {
     func enchanting() {
         let improveChance = Int.random(in: 0...100)
         if enchant < 12 {
-            if improveChance >= 50 {
+            if improveChance <= chance {
                 enchant += 1
+                chance -= 5
                 attackStat += plusAttack
                 plusAttackLabel.text = "(+\(plusAttack))"
                 currentAttackLabel.text = "Атака \(attackStat) "
-                let succesResult = ResultModel(text: "Усовершенствование прошло успешно!",
-                                               result: true)
+                let succesResult = ResultModel(
+                    text: "Усовершенствование прошло успешно!",
+                    result: true)
                 history.insert(succesResult, at: 0)
                 reloadTable()
             } else {
                 if enchant > 0 && attackStat >= 1632 {
                     enchant -= 1
+                    chance += 5
                     attackStat -= plusAttack
                     currentAttackLabel.text = "Атака \(attackStat) "
                     let failedResult = ResultModel(
@@ -152,6 +157,11 @@ class ViewController: UIViewController {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func vibration() {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     func setupViews() {
