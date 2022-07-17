@@ -8,10 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    private lazy var weaponButton: UIButton = {
+
+    lazy var weaponButton: UIButton = {
         let button = UIButton()
         button.setImage(enchantModel.image, for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         button.addTarget(self, action: #selector(weaponPressed), for: .touchUpInside)
         return button
     }()
@@ -38,7 +40,7 @@ class ViewController: UIViewController {
         return label
     }()
     
-    private lazy var plusAttackLabel: UILabel = {
+    lazy var plusAttackLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.textColor = .systemGreen
@@ -117,12 +119,6 @@ class ViewController: UIViewController {
         currentAttackLabel.text = "Атака \(enchantModel.attackStat) "
         improveButton.isHidden = enchantModel.buttonIsNotActive
         reloadTable()
-    }
-    
-    func reloadViews() {
-        currentAttackLabel.text = "Атака \(enchantModel.attackStat) "
-        plusAttackLabel.text = "(+\(enchantModel.plusAttack))"
-        weaponButton.imageView?.image = enchantModel.image
     }
     
     func reloadTable() {

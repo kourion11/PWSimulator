@@ -14,8 +14,8 @@ class WeaponViewController: UIViewController {
         return tableView
     }()
     
-    var weaponsList = WeaponsList()
     var enchantModel = EnchantModel()
+    var weaponList = WeaponList()
     
     override func viewDidLoad() {
         super .viewDidLoad()
@@ -40,13 +40,13 @@ class WeaponViewController: UIViewController {
 
 extension WeaponViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weaponsList.weapons.count
+        return weaponList.weapons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let model = weaponsList.weapons[indexPath.row].name
-        let image = weaponsList.weapons[indexPath.row].image
+        let model = weaponList.weapons[indexPath.row].name
+        let image = weaponList.weapons[indexPath.row].image
         cell.imageView?.image = image
         cell.textLabel?.text = model
         cell.textLabel?.textColor = .systemGreen
@@ -55,9 +55,12 @@ extension WeaponViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        weaponsList.selectedWeapon(selectRow: indexPath.row)
-        let vc = ViewController()
-        vc.reloadViews()
+        enchantModel.selectedWeapon(selectRow: indexPath.row)
+        if let presenter = presentingViewController as? ViewController {
+            presenter.weaponButton.imageView?.image = enchantModel.image
+            presenter.currentAttackLabel.text = "Атака \(enchantModel.initialAttack) "
+            presenter.plusAttackLabel.text = "(+\(enchantModel.plusAttack))"
+        }
         dismiss(animated: true)
     }
 }
