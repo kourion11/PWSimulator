@@ -9,10 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private lazy var weaponImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "weapon")
-        return imageView
+    private lazy var weaponButton: UIButton = {
+        let button = UIButton()
+        button.setImage(enchantModel.image, for: .normal)
+        button.addTarget(self, action: #selector(weaponPressed), for: .touchUpInside)
+        return button
     }()
     
     private lazy var tableView: UITableView = {
@@ -30,10 +31,10 @@ class ViewController: UIViewController {
         return label
     }()
     
-    private lazy var currentAttackLabel: UILabel = {
+    lazy var currentAttackLabel: UILabel = {
         let label = UILabel()
         label.textColor = .systemYellow
-        label.text = "Атака \(enchantModel.attackStat) "
+        label.text = "Атака \(enchantModel.initialAttack) "
         return label
     }()
     
@@ -73,7 +74,9 @@ class ViewController: UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 16
         button.titleColor(for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), for: .normal)
+        button.setTitleColor(
+            #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1),
+            for: .normal)
         button.titleLabel!.font = UIFont.boldSystemFont(ofSize: 22)
         button.setTitle("Улучшение", for: .normal)
         button.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
@@ -92,6 +95,12 @@ class ViewController: UIViewController {
     }
     
     @objc
+    func weaponPressed() {
+        let vc = WeaponViewController()
+        present(vc, animated: true)
+    }
+    
+    @objc
     func enchantPressed() {
         improveButton.alpha = 0.5
         improveButton.isEnabled = false
@@ -103,17 +112,17 @@ class ViewController: UIViewController {
         }
     }
     
-    func setupTable() {
-        tableView.register(ResultCell.self, forCellReuseIdentifier: "cell")
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
     func enchanting() {
         enchantModel.result()
         currentAttackLabel.text = "Атака \(enchantModel.attackStat) "
         improveButton.isHidden = enchantModel.buttonIsNotActive
         reloadTable()
+    }
+    
+    func reloadViews() {
+        currentAttackLabel.text = "Атака \(enchantModel.attackStat) "
+        plusAttackLabel.text = "(+\(enchantModel.plusAttack))"
+        weaponButton.imageView?.image = enchantModel.image
     }
     
     func reloadTable() {
@@ -122,9 +131,15 @@ class ViewController: UIViewController {
         }
     }
     
+    func setupTable() {
+        tableView.register(ResultCell.self, forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
     func setupViews() {
         view.backgroundColor = #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
-        view.addSubview(weaponImage)
+        view.addSubview(weaponButton)
         view.addSubview(tableView)
         view.addSubview(improveLabel)
         view.addSubview(improveButton)
@@ -136,12 +151,12 @@ class ViewController: UIViewController {
     }
     
     func setupCounstraints() {
-        weaponImage.translatesAutoresizingMaskIntoConstraints = false
+        weaponButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            weaponImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 95),
-            weaponImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            weaponImage.heightAnchor.constraint(equalToConstant: 50),
-            weaponImage.widthAnchor.constraint(equalToConstant: 50)
+            weaponButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 95),
+            weaponButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            weaponButton.heightAnchor.constraint(equalToConstant: 50),
+            weaponButton.widthAnchor.constraint(equalToConstant: 50)
         ])
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -196,27 +211,5 @@ class ViewController: UIViewController {
             historyLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 240),
             historyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10)
         ])
-    }
-}
-
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return enchantModel.history.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResultCell
-        let model = enchantModel.history[indexPath.row]
-        if model.result {
-            cell.resultLabel.textColor = .systemGreen
-        } else {
-            cell.resultLabel.textColor = .systemYellow
-        }
-        cell.resultLabel.text = model.text
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 25
     }
 }

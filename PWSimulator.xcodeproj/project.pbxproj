@@ -11,11 +11,15 @@
 		3374A295287F43F900A845CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374A294287F43F900A845CF /* SceneDelegate.swift */; };
 		3374A297287F43F900A845CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3374A296287F43F900A845CF /* ViewController.swift */; };
 		3374A29A287F43F900A845CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3374A298287F43F900A845CF /* Main.storyboard */; };
-		3374A29C287F43FB00A845CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3374A29B287F43FB00A845CF /* Assets.xcassets */; };
 		3374A29F287F43FB00A845CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3374A29D287F43FB00A845CF /* LaunchScreen.storyboard */; };
 		33A66D452881CE4D003F5901 /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D442881CE4D003F5901 /* ResultCell.swift */; };
 		33A66D472881D81B003F5901 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D462881D81B003F5901 /* ResultModel.swift */; };
 		33A66D4E2882E7F7003F5901 /* EnchantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D4D2882E7F7003F5901 /* EnchantModel.swift */; };
+		33A66D512882F998003F5901 /* ViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D502882F998003F5901 /* ViewController+TableView.swift */; };
+		33A66D53288452A3003F5901 /* WeaponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D52288452A3003F5901 /* WeaponViewController.swift */; };
+		33A66D55288453BD003F5901 /* WeaponModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D54288453BD003F5901 /* WeaponModel.swift */; };
+		33A66D5728845692003F5901 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A66D5628845692003F5901 /* Assets.xcassets */; };
+		33A66D5928845951003F5901 /* WeaponsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D5828845951003F5901 /* WeaponsList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,12 +28,16 @@
 		3374A294287F43F900A845CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3374A296287F43F900A845CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3374A299287F43F900A845CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3374A29B287F43FB00A845CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3374A29E287F43FB00A845CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3374A2A0287F43FB00A845CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33A66D442881CE4D003F5901 /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		33A66D462881D81B003F5901 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 		33A66D4D2882E7F7003F5901 /* EnchantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantModel.swift; sourceTree = "<group>"; };
+		33A66D502882F998003F5901 /* ViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TableView.swift"; sourceTree = "<group>"; };
+		33A66D52288452A3003F5901 /* WeaponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponViewController.swift; sourceTree = "<group>"; };
+		33A66D54288453BD003F5901 /* WeaponModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponModel.swift; sourceTree = "<group>"; };
+		33A66D5628845692003F5901 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		33A66D5828845951003F5901 /* WeaponsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponsList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,13 +72,14 @@
 			children = (
 				3374A292287F43F900A845CF /* AppDelegate.swift */,
 				3374A294287F43F900A845CF /* SceneDelegate.swift */,
+				33A66D4F2882F969003F5901 /* Extensions */,
 				33A66D4C2882E7E0003F5901 /* Models */,
 				33A66D4A2882E7CA003F5901 /* Views */,
 				33A66D482882E79C003F5901 /* Controllers */,
 				3374A298287F43F900A845CF /* Main.storyboard */,
-				3374A29B287F43FB00A845CF /* Assets.xcassets */,
 				3374A29D287F43FB00A845CF /* LaunchScreen.storyboard */,
 				3374A2A0287F43FB00A845CF /* Info.plist */,
+				33A66D5628845692003F5901 /* Assets.xcassets */,
 			);
 			path = PWSimulator;
 			sourceTree = "<group>";
@@ -79,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				3374A296287F43F900A845CF /* ViewController.swift */,
+				33A66D52288452A3003F5901 /* WeaponViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -104,8 +114,18 @@
 			children = (
 				33A66D462881D81B003F5901 /* ResultModel.swift */,
 				33A66D4D2882E7F7003F5901 /* EnchantModel.swift */,
+				33A66D54288453BD003F5901 /* WeaponModel.swift */,
+				33A66D5828845951003F5901 /* WeaponsList.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		33A66D4F2882F969003F5901 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				33A66D502882F998003F5901 /* ViewController+TableView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,7 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3374A29F287F43FB00A845CF /* LaunchScreen.storyboard in Resources */,
-				3374A29C287F43FB00A845CF /* Assets.xcassets in Resources */,
+				33A66D5728845692003F5901 /* Assets.xcassets in Resources */,
 				3374A29A287F43F900A845CF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,8 +202,12 @@
 				3374A297287F43F900A845CF /* ViewController.swift in Sources */,
 				3374A293287F43F900A845CF /* AppDelegate.swift in Sources */,
 				33A66D452881CE4D003F5901 /* ResultCell.swift in Sources */,
+				33A66D5928845951003F5901 /* WeaponsList.swift in Sources */,
 				33A66D4E2882E7F7003F5901 /* EnchantModel.swift in Sources */,
+				33A66D55288453BD003F5901 /* WeaponModel.swift in Sources */,
+				33A66D512882F998003F5901 /* ViewController+TableView.swift in Sources */,
 				33A66D472881D81B003F5901 /* ResultModel.swift in Sources */,
+				33A66D53288452A3003F5901 /* WeaponViewController.swift in Sources */,
 				3374A295287F43F900A845CF /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,7 @@ struct EnchantModel {
     var initialAttack = 1632
     var attackStat = 1632
     var plusAttack = 133
+    var image = UIImage(named: "hunter")
     var history: [ResultModel] = []
     var buttonIsNotActive = false
     
@@ -43,7 +44,7 @@ struct EnchantModel {
         chance -= 5
         attackStat += plusAttack
         history.insert(result, at: 0)
-        successEnchantBibration()
+        successEnchantVibration()
     }
     
     mutating func failedEnchant() {
@@ -71,7 +72,7 @@ struct EnchantModel {
         generator.impactOccurred()
     }
     
-    func successEnchantBibration() {
+    func successEnchantVibration() {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
     }
