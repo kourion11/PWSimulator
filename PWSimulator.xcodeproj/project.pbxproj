@@ -20,6 +20,9 @@
 		33A66D55288453BD003F5901 /* WeaponModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D54288453BD003F5901 /* WeaponModel.swift */; };
 		33A66D5728845692003F5901 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33A66D5628845692003F5901 /* Assets.xcassets */; };
 		33A66D5F28847625003F5901 /* WeaponList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D5E28847624003F5901 /* WeaponList.swift */; };
+		33A66D612886D7F0003F5901 /* StoneList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D602886D7F0003F5901 /* StoneList.swift */; };
+		33A66D642886D807003F5901 /* StoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D632886D807003F5901 /* StoneModel.swift */; };
+		33A66D662886D930003F5901 /* StoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A66D652886D930003F5901 /* StoneViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		33A66D54288453BD003F5901 /* WeaponModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponModel.swift; sourceTree = "<group>"; };
 		33A66D5628845692003F5901 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33A66D5E28847624003F5901 /* WeaponList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponList.swift; sourceTree = "<group>"; };
+		33A66D602886D7F0003F5901 /* StoneList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneList.swift; sourceTree = "<group>"; };
+		33A66D632886D807003F5901 /* StoneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneModel.swift; sourceTree = "<group>"; };
+		33A66D652886D930003F5901 /* StoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoneViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,7 @@
 			children = (
 				3374A296287F43F900A845CF /* ViewController.swift */,
 				33A66D52288452A3003F5901 /* WeaponViewController.swift */,
+				33A66D652886D930003F5901 /* StoneViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -116,6 +123,8 @@
 				33A66D4D2882E7F7003F5901 /* EnchantModel.swift */,
 				33A66D54288453BD003F5901 /* WeaponModel.swift */,
 				33A66D5E28847624003F5901 /* WeaponList.swift */,
+				33A66D602886D7F0003F5901 /* StoneList.swift */,
+				33A66D632886D807003F5901 /* StoneModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,7 +211,10 @@
 				3374A297287F43F900A845CF /* ViewController.swift in Sources */,
 				3374A293287F43F900A845CF /* AppDelegate.swift in Sources */,
 				33A66D452881CE4D003F5901 /* ResultCell.swift in Sources */,
+				33A66D612886D7F0003F5901 /* StoneList.swift in Sources */,
 				33A66D5F28847625003F5901 /* WeaponList.swift in Sources */,
+				33A66D662886D930003F5901 /* StoneViewController.swift in Sources */,
+				33A66D642886D807003F5901 /* StoneModel.swift in Sources */,
 				33A66D4E2882E7F7003F5901 /* EnchantModel.swift in Sources */,
 				33A66D55288453BD003F5901 /* WeaponModel.swift in Sources */,
 				33A66D512882F998003F5901 /* ViewController+TableView.swift in Sources */,

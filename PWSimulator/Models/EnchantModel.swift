@@ -9,54 +9,49 @@ import UIKit
 
 class EnchantModel {
     
-    var weapons: [WeaponModel] = [
-        WeaponModel(image: UIImage(named: "hunter")!, name: "☆☆☆Охотник Джоли", attackStat: 1366, plusAttack: 113),
-        WeaponModel(image: UIImage(named: "blooder")!, name: "☆☆☆Кровопийца Инчи", attackStat: 1947, plusAttack: 136),
-        WeaponModel(image: UIImage(named: "dance")!, name: "☆☆☆Танец бликов Шуни", attackStat: 1632, plusAttack: 121)
-    ]
-    
     var maxEnchantLevel = 12
     var enchant = 0
     var chance = 50
-    var weaponName = "☆☆☆Охотник Джоли"
-    var initialAttack = 1366
-    var attackStat = 1366
-    var plusAttack = 113
-    var image = UIImage(named: "hunter")
+    var weaponName: String
+    var initialAttack: Int
+    var attackStat: Int
+    var plusAttack: Int
+    var image: UIImage
     var history: [ResultModel] = []
     var buttonIsNotActive = false
+    var breakable = true
+    var plusChance = 0
+    var weaponHere = false
     
-//    let weaponList = WeaponList()
+    init(image: UIImage, weaponName: String, attackStat: Int, plusAttack: Int) {
+        self.image = image
+        self.weaponName = weaponName
+        self.initialAttack = attackStat
+        self.attackStat = attackStat
+        self.plusAttack = plusAttack
+    }
     
     func result() {
-        let improveChance = Int.random(in: 0...100)
-        if enchant < maxEnchantLevel {
-            if improveChance <= chance {
-                successEnchant()
-            } else {
-                if enchant > 0 && attackStat >= initialAttack {
-                    failedEnchant()
+        if weaponHere {
+            let improveChance = Int.random(in: 0...100)
+            if enchant < maxEnchantLevel {
+                if improveChance <= (chance + plusChance) {
+                    successEnchant()
                 } else {
-                    noResult()
+                    if enchant > 0 && attackStat >= initialAttack {
+                        failedEnchant()
+                    } else {
+                        noResult()
+                    }
                 }
+            } else {
+                buttonIsNotActive = true
             }
-        } else {
-            buttonIsNotActive = true
+            print(improveChance)
         }
     }
     
-    func selectedWeapon(selectRow: Int) {
-        print(attackStat)
-        let weapon = weapons[selectRow]
-        image = weapon.image
-        weaponName = weapon.name
-        initialAttack = weapon.attackStat
-        attackStat = weapon.attackStat
-        plusAttack = weapon.plusAttack
-    }
-    
     func successEnchant() {
-        print(attackStat)
         let result = ResultModel(
             text: "Усовершенствование прошло успешно!",
             result: true)
@@ -68,15 +63,25 @@ class EnchantModel {
     }
     
     func failedEnchant() {
-        print(attackStat)
-        enchant -= 1
-        chance += 3
-        attackStat -= plusAttack
-        let result = ResultModel(
-            text: "Уровень совершенства упал до \(enchant).",
-            result: false)
-        history.insert(result, at: 0)
-        failedEnchantVibration()
+        if breakable {
+            enchant = 0
+            chance = 50
+            attackStat = initialAttack
+            let result = ResultModel(
+                text: "Уровень совершенства упал до \(enchant).",
+                result: false)
+            history.insert(result, at: 0)
+            failedEnchantVibration()
+        } else {
+            enchant -= 1
+            chance += 3
+            attackStat -= plusAttack
+            let result = ResultModel(
+                text: "Уровень совершенства упал до \(enchant).",
+                result: false)
+            history.insert(result, at: 0)
+            failedEnchantVibration()
+        }
     }
     
     func noResult() {

@@ -17,6 +17,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let model = enchantModel.history[indexPath.row]
         cell.resultLabel.textColor = model.result ? .systemGreen : .systemYellow
         cell.resultLabel.text = model.text
+        cell.backgroundColor = .clear
         return cell
     }
     

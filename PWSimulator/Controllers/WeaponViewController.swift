@@ -14,7 +14,7 @@ class WeaponViewController: UIViewController {
         return tableView
     }()
     
-    var enchantModel = EnchantModel()
+    var enchantModel: EnchantModel!
     var weaponList = WeaponList()
     
     override func viewDidLoad() {
@@ -55,11 +55,19 @@ extension WeaponViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        enchantModel.selectedWeapon(selectRow: indexPath.row)
         if let presenter = presentingViewController as? ViewController {
-            presenter.weaponButton.imageView?.image = enchantModel.image
-            presenter.currentAttackLabel.text = "Атака \(enchantModel.initialAttack) "
-            presenter.plusAttackLabel.text = "(+\(enchantModel.plusAttack))"
+            let model = weaponList.weapons[indexPath.row]
+            presenter.enchantModel = EnchantModel(image: model.image,
+                                                  weaponName: model.name,
+                                                  attackStat: model.attackStat,
+                                                  plusAttack: model.plusAttack)
+            presenter.weaponButton.imageView?.image = presenter.enchantModel.image
+            presenter.currentAttackLabel.text = "Атака \(presenter.enchantModel.initialAttack) "
+            presenter.plusAttackLabel.text = "(+\(presenter.enchantModel.plusAttack))"
+            presenter.weaponNameLabel.text = presenter.enchantModel.weaponName
+            presenter.enchantModel.weaponHere = true
+            presenter.improveButton.isEnabled = true
+            presenter.improveButton.alpha = 1.0
         }
         dismiss(animated: true)
     }
